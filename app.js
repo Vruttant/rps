@@ -7,13 +7,28 @@ const result_p = document.querySelector(".result > p");
 const rock_div = document.getElementById("Rock");
 const paper_div = document.getElementById("Paper");
 const scissors_div = document.getElementById("Scissor");
+const reset_button = document.getElementById("reset-btn");
 
 function getComputerChoice() {
     const choices = ["Rock", "Paper", "Scissor"];
     const randomNumber = Math.floor(Math.random() * 3);
-    console.log(choices[randomNumber]);
     return choices[randomNumber];
     
+}
+
+function resetScore(){
+    if (userScore!==0 || computerScore!==0){
+        userScore = 0;
+        computerScore = 0;
+        result_p.innerHTML = "The score has been reset successfully."
+        userScore_span.innerHTML = userScore;
+    computerScore_span.innerHTML = computerScore;
+    } else {
+        result_p.innerHTML = "The score is already zero."
+    }
+    reset_button.classList.add("reset-button-glow");
+    setTimeout(function(){reset_button.classList.remove("reset-button-glow")}, 300);
+    setTimeout(function() {document.getElementById(reset_button)});
 }
 
 function win(userChoice, computerChoice){
@@ -21,7 +36,7 @@ function win(userChoice, computerChoice){
     userScore_span.innerHTML = userScore;
     result_p.innerHTML = userChoice + ' [User] beats ' + computerChoice + ' [Comp].' + ' You win!';
     document.getElementById(userChoice).classList.add("green-glow");
-    setTimeout(function() {document.getElementById(userChoice).classList.remove("green-glow")}, 300)
+    setTimeout(function() {document.getElementById(userChoice).classList.remove("green-glow")}, 300);
 }
 
 function lose(userChoice, computerChoice){
@@ -32,7 +47,7 @@ function lose(userChoice, computerChoice){
     setTimeout(function() {document.getElementById(userChoice).classList.remove("red-glow")}, 300)
 }
 
-function draw(){
+function draw(userChoice){
     result_p.innerHTML = "It's a draw!";
     document.getElementById(userChoice).classList.add("grey-glow");
     setTimeout(function() {document.getElementById(userChoice).classList.remove("grey-glow")}, 300)
@@ -70,6 +85,10 @@ function main () {
     
     scissors_div.addEventListener('click', function() {
         game("Scissor");
+    })
+
+    reset_button.addEventListener('click', function(){
+        resetScore();
     })
 }
 
